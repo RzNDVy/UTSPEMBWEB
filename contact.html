@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Me | Portofolio</title>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Animate CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Floating Blob Background -->
+    <div class="blob-bg">
+      <img src="images/blob.svg" alt="blob background" class="blob-7" />
+      <img src="images/blob.svg" alt="blob background" class="blob-8" />
+    </div>
+
+    <!-- Glassmorphism Navbar -->
+    <nav class="glass-nav">
+      <div class="container">
+        <a href="index.html" class="logo">Port<span>folio</span></a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="portfolio.html">Works</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+        <div class="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="gradient-text">Get In <span>Touch</span></h2>
+          <p>Have a project in mind or want to collaborate? Let's talk!</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info">
+            <h3>Contact Information</h3>
+            <p>
+              Feel free to reach out to me for any questions or opportunities.
+            </p>
+
+            <div class="info-items">
+              <div class="info-item">
+                <div class="icon-box">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="info-content">
+                  <h4>Location</h4>
+                  <p>Kota, Negara</p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="icon-box">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div class="info-content">
+                  <h4>Email</h4>
+                  <p>email@example.com</p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="icon-box">
+                  <i class="fas fa-phone-alt"></i>
+                </div>
+                <div class="info-content">
+                  <h4>Phone</h4>
+                  <p>+62 123 4567 890</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="social-links">
+              <h4>Follow Me</h4>
+              <div class="social-icons">
+                <a href="https://www.instagram.com/rrzzza24/"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+                <a href="inkedin.com/in/muhammad-abimanyu-riza-5310512a2/"
+                  ><i class="fab fa-linkedin-in"></i
+                ></a>
+                <a href="github.com/RzNDVy/"><i class="fab fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form">
+            <h3>Send Me a Message</h3>
+            <form id="contactForm">
+              <div class="form-group">
+                <input type="text" id="name" required />
+                <label for="name">Your Name</label>
+                <div class="underline"></div>
+              </div>
+
+              <div class="form-group">
+                <input type="email" id="email" required />
+                <label for="email">Your Email</label>
+                <div class="underline"></div>
+              </div>
+
+              <div class="form-group">
+                <input type="text" id="subject" required />
+                <label for="subject">Subject</label>
+                <div class="underline"></div>
+              </div>
+
+              <div class="form-group">
+                <textarea id="message" rows="5" required></textarea>
+                <label for="message">Your Message</label>
+                <div class="underline"></div>
+              </div>
+
+              <button type="submit" class="btn primary-btn">
+                <span>Send Message</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+      <div class="container">
+        <div class="map-wrapper">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.923521676343!2d107.6089753153387!3d-6.902394369411338!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e64a1e6a1f3d%3A0x201c3a8f3a1e3b1!2sUniversitas%20Telkom!5e0!3m2!1sen!2sid!4v1623399476143!5m2!1sen!2sid"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+  </body>
+</html>

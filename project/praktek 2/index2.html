@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Abimanyu Riza | Tech Enthusiast</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-light: #e0f7fa;
+            --primary-medium: #80deea;
+            --primary-dark: #00acc1;
+            --text-dark: #37474f;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background-color: #f8fdff;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 150, 180, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            color: var(--primary-dark) !important;
+        }
+        
+        .nav-link {
+            color: var(--text-dark);
+            font-weight: 500;
+            margin: 0 10px;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-dark);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-light), white);
+            padding: 100px 0;
+        }
+        
+        .profile-img {
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 150, 180, 0.2);
+        }
+        
+        .section-title {
+            color: var(--primary-dark);
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-medium);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 150, 180, 0.1);
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 600;
+            border-bottom: none;
+        }
+        
+        .skill-badge {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin-right: 10px;
+        }
+        
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--primary-light);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Muhammad Abimanyu Riza</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center text-lg-start">
+                    <h1 class="display-4 fw-bold mb-3">Muhammad Abimanyu Riza</h1>
+                    <p class="lead mb-4">College Student | Tech Enthusiast | Web Developer</p>
+                    <p class="mb-4">Passionate about technology, web development, and of course, cats!</p>
+                    <a href="#contact" class="btn btn-primary px-4 py-2">Get In Touch</a>
+                </div>
+                <div class="col-lg-6 text-center mt-5 mt-lg-0">
+                    <img src="https://i.pinimg.com/736x/96/06/2f/96062f72f61a01e1b4beee7b7de1742f.jpg" 
+                         width="350"
+                         height="350"
+                         class="profile-img rounded-circle"
+                         alt="Profile Photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p>I'm a dedicated college student with a deep passion for technology and web development. My journey in tech started when I built my first website, and since then, I've been continuously learning and expanding my skills.</p>
+                    <p>When I'm not coding or studying, you can find me playing with cats or exploring new tech trends. I believe that technology has the power to solve real-world problems and I'm excited to be part of that change.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-graduation-cap me-2"></i>Education
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Computer Science</h5>
+                            <p class="card-text">Universitas Sebelas Maret</p>
+                            <p class="text-muted">2024 - 2027</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title">My Skills</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <i class="fas fa-code me-2"></i>Web Development
+                        </div>
+                        <div class="card-body">
+                            <span class="skill-badge"><i class="fab fa-html5 me-1"></i>HTML5</span>
+                            <span class="skill-badge"><i class="fab fa-css3-alt me-1"></i>CSS3</span>
+                            <span class="skill-badge"><i class="fab fa-js me-1"></i>JavaScript</span>
+                            <span class="skill-badge"><i class="fab fa-bootstrap me-1"></i>Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <i class="fas fa-laptop-code me-2"></i>Programming
+                        </div>
+                        <div class="card-body">
+                            <span class="skill-badge"><i class="fab fa-python me-1"></i>Python</span>
+                            <span class="skill-badge"><i class="fas fa-database me-1"></i>SQL</span>
+                            <span class="skill-badge"><i class="fab fa-java me-1"></i>Java</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <i class="fas fa-tools me-2"></i>Tools & Others
+                        </div>
+                        <div class="card-body">
+                            <span class="skill-badge"><i class="fab fa-git-alt me-1"></i>Git</span>
+                            <span class="skill-badge"><i class="fab fa-github me-1"></i>GitHub</span>
+                            <span class="skill-badge"><i class="fas fa-cat me-1"></i>Cat Whispering</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-5">
+        <div class="container">
+            <h2 class="section-title">My Projects</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/300x200/80deea/ffffff?text=Web+Project" class="card-img-top" alt="Web Project">
+                        <div class="card-body">
+                            <h5 class="card-title">Personal Portfolio Website</h5>
+                            <p class="card-text">A responsive portfolio website built with HTML, CSS, and Bootstrap.</p>
+                            <a href="#" class="btn btn-outline-primary">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/300x200/4dd0e1/ffffff?text=Tech+Project" class="card-img-top" alt="Tech Project">
+                        <div class="card-body">
+                            <h5 class="card-title">E-commerce Dashboard</h5>
+                            <p class="card-text">An analytics dashboard for e-commerce businesses using Python and JavaScript.</p>
+                            <a href="#" class="btn btn-outline-primary">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/300x200/b2ebf2/ffffff?text=Cat+App" class="card-img-top" alt="Cat App">
+                        <div class="card-body">
+                            <h5 class="card-title">Cat Adoption Platform</h5>
+                            <p class="card-text">A web application to connect cat lovers with cats needing homes.</p>
+                            <a href="#" class="btn btn-outline-primary">View Project</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-envelope me-2"></i>Contact Information
+                        </div>
+                        <div class="card-body">
+                            <p><i class="contact-icon fas fa-envelope"></i> abimanyuriza008@student.uns.ac.id</p>
+                            <p><i class="contact-icon fas fa-phone"></i> +62 821-3375-1840</p>
+                            <p><i class="contact-icon fas fa-map-marker-alt"></i> Surakarta, Indonesia</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-4 mt-lg-0">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-paper-plane me-2"></i>Send Me a Message
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Your Name">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" placeholder="Your Email">
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control" rows="3" placeholder="Your Message"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <div class="social-icons mb-4">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p>&copy; 2023 Muhammad Abimanyu Riza. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

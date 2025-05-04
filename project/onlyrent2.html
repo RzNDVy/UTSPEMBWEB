@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyRent | Premium Rental Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Light Theme */
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #93c5fd;
+            --secondary: #f59e0b;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg: #f9fafb;
+            --bg-light: #ffffff;
+            --border: #e5e7eb;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Dark Theme */
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --primary-light: #1e40af;
+            --secondary: #f59e0b;
+            --text: #f9fafb;
+            --text-light: #d1d5db;
+            --bg: #111827;
+            --bg-light: #1f2937;
+            --border: #374151;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        /* Settings Container */
+        .settings-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 1000;
+        }
+
+        .settings-btn {
+            background: var(--bg-light);
+            color: var(--text);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .settings-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: var(--bg-light);
+            min-width: 120px;
+            box-shadow: var(--shadow-lg);
+            border-radius: 8px;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: var(--text);
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--primary-light);
+            color: var(--bg-light);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--bg-light);
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text);
+            font-weight: 500;
+            text-decoration: none;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--bg-light);
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: rotate 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .steps {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--bg-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+
+        .step-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-method {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem;
+            background: var(--bg);
+            border-radius: 12px;
+            width: 250px;
+            transition: var(--transition);
+        }
+
+        .contact-method:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: var(--bg-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .contact-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .contact-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Inventory Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--secondary);
+            color: var(--text);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .card-img-container {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .card-price small {
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: var(--text-light);
+        }
+
+        .stars {
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--bg-light);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--bg-light);
+        }
+
+        .btn-block {
+            display: flex;
+            width: 100%;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: var(--bg-light);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Invoice Styles */
+        .invoice {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .invoice-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .invoice-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .invoice-detail-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .invoice-detail-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .invoice-table th {
+            text-align: left;
+            padding: 1rem;
+            background: var(--primary);
+            color: var(--bg-light);
+        }
+
+        .invoice-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .invoice-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .total-row {
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            margin-top: 2rem;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: var(--bg);
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-method:hover {
+            background: var(--border);
+        }
+
+        .payment-method.active {
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid var(--primary);
+        }
+
+        .payment-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer Styles */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes underlineGrow {
+            0% { transform: scaleX(0.8); }
+            100% { transform: scaleX(1.1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .steps, .contact-methods {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .step, .contact-method {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language and Theme Switcher -->
+    <div class="settings-container">
+        <div class="dropdown">
+            <button class="settings-btn" title="Change Language">
+                <i class="fas fa-language"></i>
+            </button>
+            <div class="dropdown-content" id="language-dropdown">
+                <a href="#" data-lang="en">English</a>
+                <a href="#" data-lang="id">Indonesia</a>
+                <a href="#" data-lang="ja">日本語</a>
+                <a href="#" data-lang="zh">中文</a>
+            </div>
+        </div>
+        <button class="settings-btn" id="theme-toggle" title="Toggle Dark Mode">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <i class="fas fa-camera-retro logo-icon"></i>
+                <span data-i18n="app.title">OnlyRent</span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#inventory" class="nav-link" data-i18n="nav.inventory">Inventory</a>
+                <a href="#how-it-works" class="nav-link" data-i18n="nav.how_it_works">How It Works</a>
+                <a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a>
+                <a href="login.html" class="nav-link" data-i18n="nav.login">Login</a>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" data-i18n="hero.title">Premium Equipment Rentals</h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">Professional gear for your creative projects at affordable rates</p>
+            <a href="#inventory" class="btn btn-primary" data-i18n="hero.button">Browse Inventory</a>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="section">
+            <h2 class="section-title" data-i18n="section.how_it_works">How It Works</h2>
+            <div class="how-it-works">
+                <p style="text-align: center; max-width: 700px; margin: 0 auto;" data-i18n="section.how_it_works_desc">
+                    Renting equipment with OnlyRent is simple and hassle-free. Follow these easy steps to get the gear you need for your next project.
+                </p>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title" data-i18n="step.1.title">Browse & Select</h3>
+                        <p data-i18n="step.1.desc">Explore our extensive inventory of professional equipment and select the items you need for your project.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title" data-i18n="step.2.title">Choose Rental Period</h3>
+                        <p data-i18n="step.2.desc">Select your rental dates and duration. Prices are calculated based on daily rates.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title" data-i18n="step.3.title">Make Payment</h3>
+                        <p data-i18n="step.3.desc">Pay securely online. We accept various payment methods including credit cards and e-wallets.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title" data-i18n="step.4.title">Pickup or Delivery</h3>
+                        <p data-i18n="step.4.desc">Collect your equipment at our location or opt for delivery (additional fees may apply).</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <h3 class="step-title" data-i18n="step.5.title">Return & Get Deposit Back</h3>
+                        <p data-i18n="step.5.desc">Return the equipment on time and in good condition to receive your security deposit refund.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Inventory Section -->
+        <section id="inventory" class="section">
+            <h2 class="section-title" data-i18n="section.inventory">Our Equipment</h2>
+            <div class="grid" id="inventory-grid">
+                <!-- Items loaded by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2 class="section-title" data-i18n="section.contact">Contact Us</h2>
+            <div class="contact-section">
+                <p style="max-width: 600px; margin: 0 auto 1rem;" data-i18n="contact.desc">
+                    Have questions or need assistance? Reach out to us through our social media channels. We're here to help!
+                </p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <h3 class="contact-title" data-i18n="contact.instagram">Instagram</h3>
+                        <p data-i18n="contact.instagram_desc">Follow us for updates</p>
+                        <a href="https://instagram.com/onlyrent" class="contact-link" target="_blank">
+                            <i class="fab fa-instagram"></i> <span data-i18n="contact.instagram_handle">@onlyrent</span>
+                        </a>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3 class="contact-title" data-i18n="contact.whatsapp">WhatsApp</h3>
+                        <p data-i18n="contact.whatsapp_desc">Fast response for inquiries</p>
+                        <a href="https://wa.me/6281234567890" class="contact-link" target="_blank">
+                            <i class="fab fa-whatsapp"></i> <span data-i18n="contact.whatsapp_number">+62 812-3456-7890</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rental Modal -->
+        <div class="modal" id="rental-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" data-i18n="modal.rental_title">Rental Details</h3>
+                    <button class="btn btn-outline close-modal">&times;</button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <!-- Content loaded by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Invoice Modal -->
+        <div class="modal" id="invoice-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" data-i18n="modal.invoice_title">Rental Invoice</h3>
+                    <button class="btn btn-outline close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="invoice" id="invoice-content">
+                        <!-- Invoice loaded by JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline close-modal" data-i18n="button.close">Close</button>
+                    <button class="btn btn-primary" id="proceed-payment" data-i18n="button.proceed_payment">
+                        Proceed to Payment
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Modal -->
+        <div class="modal" id="payment-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" data-i18n="modal.payment_title">Complete Payment</h3>
+                    <button class="btn btn-outline close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="payment-methods">
+                        <h4 data-i18n="payment.methods">Select Payment Method</h4>
+                        
+                        <div class="payment-method active">
+                            <i class="fas fa-qrcode payment-icon"></i>
+                            <div>
+                                <div data-i18n="payment.qr">QR Code Payment</div>
+                                <small data-i18n="payment.qr_desc">Instant confirmation</small>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-method">
+                            <i class="fas fa-credit-card payment-icon"></i>
+                            <div>
+                                <div data-i18n="payment.card">Credit/Debit Card</div>
+                                <small data-i18n="payment.card_desc">Visa, Mastercard, JCB</small>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-method">
+                            <i class="fas fa-wallet payment-icon"></i>
+                            <div>
+                                <div data-i18n="payment.ewallet">E-Wallet</div>
+                                <small data-i18n="payment.ewallet_desc">OVO, DANA, ShopeePay</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="qr-payment-section" style="text-align: center; margin-top: 2rem;">
+                        <div style="background: white; padding: 1rem; display: inline-block; border-radius: 8px; margin-bottom: 1rem;">
+                            <div style="font-family: monospace; line-height: 1; letter-spacing: 2px; text-align: center;" id="qr-code">
+                                <!-- QR code will be generated here -->
+                            </div>
+                        </div>
+                        <p data-i18n="payment.scan">Scan this QR code to complete payment</p>
+                        <p style="margin-top: 0.5rem; font-size: 1.25rem; font-weight: 600;" id="payment-amount">
+                            Rp0
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline close-modal" data-i18n="button.cancel">Cancel</button>
+                    <button class="btn btn-primary" id="confirm-payment" data-i18n="button.confirm_payment">
+                        Confirm Payment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: linear-gradient(135deg, var(--primary-dark), var(--primary)); padding: 4rem 0; position: relative; overflow: hidden;">
+        <!-- Wave decoration -->
+        <div style="position: absolute; top: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0;">
+            <svg style="display: block; width: calc(100% + 1.3px); height: 50px;" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="var(--bg-light)"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="var(--bg-light)"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="var(--bg-light)"></path>
+            </svg>
+        </div>
+
+        <div class="container" style="position: relative; z-index: 1;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+                <!-- Logo with animation -->
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <i class="fas fa-camera-retro" style="font-size: 2rem; color: white; animation: pulse 2s infinite;"></i>
+                    <span class="logo" style="font-size: 1.75rem; font-weight: 700; color: white;">OnlyRent</span>
+                </div>
+
+                <!-- Tagline with animated underline -->
+                <div style="position: relative; display: inline-block;">
+                    <p style="font-size: 1.25rem; color: white; opacity: 0.9; margin-bottom: 1.5rem; position: relative; display: inline-block;" data-i18n="footer.tagline">
+                        Premium equipment rental service
+                    </p>
+                    <div style="position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background: var(--secondary); transform: scaleX(0.8); transform-origin: center; animation: underlineGrow 3s infinite alternate;"></div>
+                </div>
+
+                <!-- Social icons with hover effects -->
+                <div style="display: flex; gap: 1.5rem; margin-bottom: 2rem;">
+                    <a href="https://instagram.com/onlyrent" style="width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; color: white; font-size: 1.25rem;" target="_blank" onmouseover="this.style.transform='translateY(-5px)'; this.style.background='rgba(255,255,255,0.2)';" onmouseout="this.style.transform=''; this.style.background='rgba(255,255,255,0.1)';">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://wa.me/6281234567890" style="width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; color: white; font-size: 1.25rem;" target="_blank" onmouseover="this.style.transform='translateY(-5px)'; this.style.background='rgba(255,255,255,0.2)';" onmouseout="this.style.transform=''; this.style.background='rgba(255,255,255,0.1)';">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#" style="width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; color: white; font-size: 1.25rem;" onmouseover="this.style.transform='translateY(-5px)'; this.style.background='rgba(255,255,255,0.2)';" onmouseout="this.style.transform=''; this.style.background='rgba(255,255,255,0.1)';">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" style="width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; color: white; font-size: 1.25rem;" onmouseover="this.style.transform='translateY(-5px)'; this.style.background='rgba(255,255,255,0.2)';" onmouseout="this.style.transform=''; this.style.background='rgba(255,255,255,0.1)';">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+
+                <!-- Copyright with subtle animation -->
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                    <p style="color: white; opacity: 0.7; font-size: 0.9rem; transition: opacity 0.3s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'" data-i18n="footer.copyright">
+                        &copy; 2025 OnlyRent. All rights reserved.
+                    </p>
+                    <div style="width: 100px; height: 2px; background: rgba(255,255,255,0.2);"></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language Translations
+        const translations = {
+            en: {
+                "app.title": "OnlyRent",
+                "nav.inventory": "Inventory",
+                "nav.how_it_works": "How It Works",
+                "nav.contact": "Contact",
+                "nav.login": "Login",
+                "hero.title": "Premium Equipment Rentals",
+                "hero.subtitle": "Professional gear for your creative projects at affordable rates",
+                "hero.button": "Browse Inventory",
+                "section.how_it_works": "How It Works",
+                "section.how_it_works_desc": "Renting equipment with OnlyRent is simple and hassle-free. Follow these easy steps to get the gear you need for your next project.",
+                "step.1.title": "Browse & Select",
+                "step.1.desc": "Explore our extensive inventory of professional equipment and select the items you need for your project.",
+                "step.2.title": "Choose Rental Period",
+                "step.2.desc": "Select your rental dates and duration. Prices are calculated based on daily rates.",
+                "step.3.title": "Make Payment",
+                "step.3.desc": "Pay securely online. We accept various payment methods including credit cards and e-wallets.",
+                "step.4.title": "Pickup or Delivery",
+                "step.4.desc": "Collect your equipment at our location or opt for delivery (additional fees may apply).",
+                "step.5.title": "Return & Get Deposit Back",
+                "step.5.desc": "Return the equipment on time and in good condition to receive your security deposit refund.",
+                "section.inventory": "Our Equipment",
+                "section.contact": "Contact Us",
+                "contact.desc": "Have questions or need assistance? Reach out to us through our social media channels. We're here to help!",
+                "contact.instagram": "Instagram",
+                "contact.instagram_desc": "Follow us for updates",
+                "contact.instagram_handle": "@onlyrent",
+                "contact.whatsapp": "WhatsApp",
+                "contact.whatsapp_desc": "Fast response for inquiries",
+                "contact.whatsapp_number": "+62 812-3456-7890",
+                "modal.rental_title": "Rental Details",
+                "modal.invoice_title": "Rental Invoice",
+                "modal.payment_title": "Complete Payment",
+                "button.close": "Close",
+                "button.proceed_payment": "Proceed to Payment",
+                "button.cancel": "Cancel",
+                "button.confirm_payment": "Confirm Payment",
+                "payment.methods": "Select Payment Method",
+                "payment.qr": "QR Code Payment",
+                "payment.qr_desc": "Instant confirmation",
+                "payment.card": "Credit/Debit Card",
+                "payment.card_desc": "Visa, Mastercard, JCB",
+                "payment.ewallet": "E-Wallet",
+                "payment.ewallet_desc": "OVO, DANA, ShopeePay",
+                "payment.scan": "Scan this QR code to complete payment",
+                "payment.confirmed": "Payment confirmed!",
+                "footer.tagline": "Premium equipment rental service",
+                "footer.copyright": "&copy; 2025 OnlyRent. All rights reserved.",
+                "card.market_price": "market price",
+                "card.rent_now": "Rent Now",
+                "modal.condition": "Condition",
+                "modal.rental_days": "Rental Period (days)",
+                "modal.calculate_rental": "Calculate Rental",
+                "invoice.item": "Item:",
+                "invoice.due_date": "Due Date:",
+                "invoice.description": "Description",
+                "invoice.amount": "Amount",
+                "invoice.rental_fee": "Rental Fee",
+                "invoice.deposit": "Security Deposit",
+                "invoice.total": "Total Amount",
+                "invoice.notes_title": "Important Notes:",
+                "invoice.note1": "Security deposit will be refunded after equipment return",
+                "invoice.note2": "Late returns will incur additional charges",
+                "invoice.note3": "Damage to equipment may result in deposit forfeiture"
+            },
+            id: {
+                "app.title": "OnlyRent",
+                "nav.inventory": "Inventaris",
+                "nav.how_it_works": "Cara Kerja",
+                "nav.contact": "Kontak",
+                "nav.login": "Masuk",
+                "hero.title": "Penyewaan Peralatan Premium",
+                "hero.subtitle": "Perlengkapan profesional untuk proyek kreatif Anda dengan harga terjangkau",
+                "hero.button": "Lihat Inventaris",
+                "section.how_it_works": "Cara Kerja",
+                "section.how_it_works_desc": "Menyewa peralatan dengan OnlyRent sederhana dan mudah. Ikuti langkah-langkah berikut untuk mendapatkan peralatan yang Anda butuhkan.",
+                "step.1.title": "Jelajahi & Pilih",
+                "step.1.desc": "Jelajahi inventaris peralatan profesional kami dan pilih yang Anda butuhkan.",
+                "step.2.title": "Pilih Periode Sewa",
+                "step.2.desc": "Pilih tanggal dan durasi sewa. Harga dihitung berdasarkan tarif harian.",
+                "step.3.title": "Lakukan Pembayaran",
+                "step.3.desc": "Bayar dengan aman secara online. Kami menerima berbagai metode pembayaran.",
+                "step.4.title": "Ambil atau Antar",
+                "step.4.desc": "Ambil peralatan di lokasi kami atau pilih pengantaran (biaya tambahan mungkin berlaku).",
+                "step.5.title": "Kembalikan & Dapatkan Deposit",
+                "step.5.desc": "Kembalikan peralatan tepat waktu dan dalam kondisi baik untuk mendapatkan kembali deposit Anda.",
+                "section.inventory": "Peralatan Kami",
+                "section.contact": "Hubungi Kami",
+                "contact.desc": "Punya pertanyaan atau butuh bantuan? Hubungi kami melalui media sosial. Kami siap membantu!",
+                "contact.instagram": "Instagram",
+                "contact.instagram_desc": "Ikuti kami untuk update",
+                "contact.instagram_handle": "@onlyrent",
+                "contact.whatsapp": "WhatsApp",
+                "contact.whatsapp_desc": "Respon cepat untuk pertanyaan",
+                "contact.whatsapp_number": "+62 812-3456-7890",
+                "modal.rental_title": "Detail Penyewaan",
+                "modal.invoice_title": "Invoice Penyewaan",
+                "modal.payment_title": "Lengkapi Pembayaran",
+                "button.close": "Tutup",
+                "button.proceed_payment": "Lanjut ke Pembayaran",
+                "button.cancel": "Batal",
+                "button.confirm_payment": "Konfirmasi Pembayaran",
+                "payment.methods": "Pilih Metode Pembayaran",
+                "payment.qr": "Pembayaran QR",
+                "payment.qr_desc": "Konfirmasi instan",
+                "payment.card": "Kartu Kredit/Debit",
+                "payment.card_desc": "Visa, Mastercard, JCB",
+                "payment.ewallet": "E-Wallet",
+                "payment.ewallet_desc": "OVO, DANA, ShopeePay",
+                "payment.scan": "Scan QR code ini untuk menyelesaikan pembayaran",
+                "payment.confirmed": "Pembayaran dikonfirmasi!",
+                "footer.tagline": "Layanan penyewaan peralatan premium",
+                "footer.copyright": "&copy; 2025 OnlyRent. Hak cipta dilindungi.",
+                "card.market_price": "harga pasar",
+                "card.rent_now": "Sewa Sekarang",
+                "modal.condition": "Kondisi",
+                "modal.rental_days": "Periode Sewa (hari)",
+                "modal.calculate_rental": "Hitung Sewa",
+                "invoice.item": "Barang:",
+                "invoice.due_date": "Tanggal Jatuh Tempo:",
+                "invoice.description": "Deskripsi",
+                "invoice.amount": "Jumlah",
+                "invoice.rental_fee": "Biaya Sewa",
+                "invoice.deposit": "Deposit Keamanan",
+                "invoice.total": "Jumlah Total",
+                "invoice.notes_title": "Catatan Penting:",
+                "invoice.note1": "Deposit akan dikembalikan setelah peralatan dikembalikan",
+                "invoice.note2": "Keterlambatan pengembalian akan dikenakan biaya tambahan",
+                "invoice.note3": "Kerusakan pada peralatan dapat mengakibatkan kehilangan deposit"
+            },
+            ja: {
+                "app.title": "OnlyRent",
+                "nav.inventory": "在庫",
+                "nav.how_it_works": "使い方",
+                "nav.contact": "連絡先",
+                "nav.login": "ログイン",
+                "hero.title": "プレミアム機材レンタル",
+                "hero.subtitle": "手頃な価格でプロ仕様の機材をレンタル",
+                "hero.button": "在庫を見る",
+                "section.how_it_works": "使い方",
+                "section.how_it_works_desc": "OnlyRentでの機材レンタルは簡単でストレスフリーです。次の簡単な手順に従って、必要な機材を入手してください。",
+                "step.1.title": "閲覧と選択",
+                "step.1.desc": "プロ仕様の機材を閲覧し、プロジェクトに必要なアイテムを選択してください。",
+                "step.2.title": "レンタル期間を選択",
+                "step.2.desc": "レンタルの日付と期間を選択してください。料金は日割りで計算されます。",
+                "step.3.title": "支払いを行う",
+                "step.3.desc": "安全にオンラインでお支払いください。クレジットカードや電子決済など様々な方法をご利用いただけます。",
+                "step.4.title": "受け取りまたは配達",
+                "step.4.desc": "当社の場所で機材を受け取るか、配達を選択してください（追加料金がかかる場合があります）。",
+                "step.5.title": "返却とデポジット返金",
+                "step.5.desc": "時間通りに機材を良好な状態で返却し、デポジットをお受け取りください。",
+                "section.inventory": "機材一覧",
+                "section.contact": "お問い合わせ",
+                "contact.desc": "質問やサポートが必要ですか？ソーシャルメディアを通じてお問い合わせください。",
+                "contact.instagram": "Instagram",
+                "contact.instagram_desc": "更新情報をフォロー",
+                "contact.instagram_handle": "@onlyrent",
+                "contact.whatsapp": "WhatsApp",
+                "contact.whatsapp_desc": "迅速な対応",
+                "contact.whatsapp_number": "+62 812-3456-7890",
+                "modal.rental_title": "レンタル詳細",
+                "modal.invoice_title": "レンタル請求書",
+                "modal.payment_title": "支払い完了",
+                "button.close": "閉じる",
+                "button.proceed_payment": "支払いに進む",
+                "button.cancel": "キャンセル",
+                "button.confirm_payment": "支払いを確認",
+                "payment.methods": "支払い方法を選択",
+                "payment.qr": "QRコード支払い",
+                "payment.qr_desc": "即時確認",
+                "payment.card": "クレジット/デビットカード",
+                "payment.card_desc": "Visa、Mastercard、JCB",
+                "payment.ewallet": "電子財布",
+                "payment.ewallet_desc": "OVO、DANA、ShopeePay",
+                "payment.scan": "このQRコードをスキャンして支払いを完了してください",
+                "payment.confirmed": "支払いが確認されました！",
+                "footer.tagline": "プレミアム機材レンタルサービス",
+                "footer.copyright": "&copy; 2025 OnlyRent. 無断複写・転載を禁じます。",
+                "card.market_price": "市場価格",
+                "card.rent_now": "今すぐレンタル",
+                "modal.condition": "状態",
+                "modal.rental_days": "レンタル期間（日）",
+                "modal.calculate_rental": "レンタルを計算",
+                "invoice.item": "アイテム:",
+                "invoice.due_date": "期日:",
+                "invoice.description": "説明",
+                "invoice.amount": "金額",
+                "invoice.rental_fee": "レンタル料金",
+                "invoice.deposit": "保証金",
+                "invoice.total": "合計金額",
+                "invoice.notes_title": "重要な注意事項:",
+                "invoice.note1": "機器返却後に保証金を返金します",
+                "invoice.note2": "返却遅延には追加料金がかかります",
+                "invoice.note3": "機器の損傷により保証金が没収される場合があります"
+            },
+            zh: {
+                "app.title": "OnlyRent",
+                "nav.inventory": "设备库存",
+                "nav.how_it_works": "如何使用",
+                "nav.contact": "联系我们",
+                "nav.login": "登录",
+                "hero.title": "优质设备租赁",
+                "hero.subtitle": "为您的创意项目提供专业设备，价格合理",
+                "hero.button": "浏览库存",
+                "section.how_it_works": "如何使用",
+                "section.how_it_works_desc": "使用OnlyRent租赁设备简单方便。按照以下步骤获取您需要的设备。",
+                "step.1.title": "浏览和选择",
+                "step.1.desc": "浏览我们的专业设备库存并选择您需要的物品。",
+                "step.2.title": "选择租赁期限",
+                "step.2.desc": "选择您的租赁日期和持续时间。价格按日费率计算。",
+                "step.3.title": "进行支付",
+                "step.3.desc": "安全在线支付。我们接受各种付款方式。",
+                "step.4.title": "自取或送货",
+                "step.4.desc": "在我们的地点取设备或选择送货（可能收取额外费用）。",
+                "step.5.title": "归还并取回押金",
+                "step.5.desc": "按时归还设备并保持良好状态以取回您的押金。",
+                "section.inventory": "我们的设备",
+                "section.contact": "联系我们",
+                "contact.desc": "有问题或需要帮助？通过我们的社交媒体渠道联系我们。",
+                "contact.instagram": "Instagram",
+                "contact.instagram_desc": "关注我们获取更新",
+                "contact.instagram_handle": "@onlyrent",
+                "contact.whatsapp": "WhatsApp",
+                "contact.whatsapp_desc": "快速响应咨询",
+                "contact.whatsapp_number": "+62 812-3456-7890",
+                "modal.rental_title": "租赁详情",
+                "modal.invoice_title": "租赁发票",
+                "modal.payment_title": "完成支付",
+                "button.close": "关闭",
+                "button.proceed_payment": "继续支付",
+                "button.cancel": "取消",
+                "button.confirm_payment": "确认支付",
+                "payment.methods": "选择支付方式",
+                "payment.qr": "二维码支付",
+                "payment.qr_desc": "即时确认",
+                "payment.card": "信用卡/借记卡",
+                "payment.card_desc": "Visa, Mastercard, JCB",
+                "payment.ewallet": "电子钱包",
+                "payment.ewallet_desc": "OVO, DANA, ShopeePay",
+                "payment.scan": "扫描此二维码完成支付",
+                "payment.confirmed": "付款已确认！",
+                "footer.tagline": "优质设备租赁服务",
+                "footer.copyright": "&copy; 2025 OnlyRent. 版权所有。",
+                "card.market_price": "市场价格",
+                "card.rent_now": "立即租赁",
+                "modal.condition": "状况",
+                "modal.rental_days": "租赁期限（天）",
+                "modal.calculate_rental": "计算租赁",
+                "invoice.item": "物品:",
+                "invoice.due_date": "到期日:",
+                "invoice.description": "描述",
+                "invoice.amount": "金额",
+                "invoice.rental_fee": "租赁费",
+                "invoice.deposit": "押金",
+                "invoice.total": "总金额",
+                "invoice.notes_title": "重要注意事项:",
+                "invoice.note1": "设备归还后将退还押金",
+                "invoice.note2": "延迟归还将产生额外费用",
+                "invoice.note3": "设备损坏可能导致押金没收"
+            }
+        };
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        // Apply saved theme
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            const icon = themeToggle.querySelector('i');
+            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            themeToggle.title = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        }
+
+        // Language Switcher
+        const languageDropdown = document.getElementById('language-dropdown');
+        const currentLanguage = localStorage.getItem('language') || 'en';
+        
+        // Apply saved language
+        changeLanguage(currentLanguage);
+
+        languageDropdown.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = e.target.getAttribute('data-lang');
+                changeLanguage(lang);
+                localStorage.setItem('language', lang);
+            });
+        });
+
+        function changeLanguage(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                } else {
+                    el.textContent = translations['en'][key]; // Fallback to English
+                }
+            });
+        }
+
+        // Calculate rental costs (5% daily, 10% deposit)
+        function calculateRental(item, days) {
+            const dailyRate = item.price * 0.05;
+            const deposit = item.price * 0.10;
+            const totalRent = dailyRate * days;
+            const totalAmount = totalRent + deposit;
+            
+            return {
+                item: item,
+                dailyRate: dailyRate,
+                rentDays: days,
+                totalRent: totalRent,
+                deposit: deposit,
+                totalAmount: totalAmount,
+                invoiceNo: `INV-${new Date().getTime().toString().slice(-6)}`,
+                dueDate: new Date(Date.now() + days * 24 * 60 * 60 * 1000).toLocaleDateString('id-ID')
+            };
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('id-ID', { 
+                style: 'currency', 
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Sample inventory data
+        const inventory = [
+            {
+                id: 1,
+                name: "Canon EOS 2000D",
+                price: 2500000,
+                category: "Beginner Camera",
+                condition: "Excellent",
+                rating: 4.5,
+                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 2,
+                name: "Sony ZV-1",
+                price: 4500000,
+                category: "Vlogging Camera",
+                condition: "Very Good",
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 3,
+                name: "Canon EOS R6",
+                price: 7500000,
+                category: "Professional Camera",
+                condition: "Excellent",
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 4,
+                name: "Sony A7S III",
+                price: 15000000,
+                category: "Cinema Camera",
+                condition: "Like New",
+                rating: 5.0,
+                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            }
+        ];
+
+        // Load inventory
+        function loadInventory() {
+            const inventoryGrid = document.getElementById('inventory-grid');
+            inventoryGrid.innerHTML = '';
+            
+            inventory.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-img-container">
+                        <img src="${item.image}" alt="${item.name}" class="card-img">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">${item.name}</h3>
+                        <div class="card-meta">
+                            <span>${item.category}</span>
+                            <span>${item.condition}</span>
+                        </div>
+                        <div class="stars">
+                            ${'★'.repeat(Math.floor(item.rating))}${'☆'.repeat(5 - Math.floor(item.rating))}
+                            <small>(${item.rating})</small>
+                        </div>
+                        <p class="card-price">${formatCurrency(item.price)} <small data-i18n="card.market_price">market price</small></p>
+                        <button class="btn btn-primary btn-block rent-btn" data-id="${item.id}" data-i18n="card.rent_now">
+                            Rent Now
+                        </button>
+                    </div>
+                `;
+                inventoryGrid.appendChild(card);
+            });
+            
+            // Translate newly added elements
+            changeLanguage(localStorage.getItem('language') || 'en');
+            
+            // Add event listeners to rent buttons
+            document.querySelectorAll('.rent-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemId = parseInt(this.getAttribute('data-id'));
+                    const item = inventory.find(i => i.id === itemId);
+                    showRentalModal(item);
+                });
+            });
+        }
+
+        // Show rental modal
+        function showRentalModal(item) {
+            const modalBody = document.getElementById('modal-body');
+            const currentLanguage = localStorage.getItem('language') || 'en';
+            
+            modalBody.innerHTML = `
+                <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <img src="${item.image}" alt="${item.name}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px;">
+                    <div>
+                        <h3 style="margin-bottom: 0.5rem;">${item.name}</h3>
+                        <p style="color: var(--text-light); margin-bottom: 0.5rem;">${item.category}</p>
+                        <p style="margin-bottom: 0.5rem;">${translations[currentLanguage]['modal.condition']}: ${item.condition}</p>
+                        <div class="stars">
+                            ${'★'.repeat(Math.floor(item.rating))}${'☆'.repeat(5 - Math.floor(item.rating))}
+                            <small>(${item.rating})</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <form id="rental-form">
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="modal.rental_days">Rental Period (days)</label>
+                        <input type="number" class="form-control" id="rental-days" min="1" value="1" required>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <button type="submit" class="btn btn-primary btn-block" data-i18n="modal.calculate_rental">
+                            Calculate Rental
+                        </button>
+                    </div>
+                </form>
+            `;
+            
+            // Translate modal content
+            changeLanguage(currentLanguage);
+            
+            // Form submission
+            document.getElementById('rental-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const days = parseInt(document.getElementById('rental-days').value);
+                const currentRental = calculateRental(item, days);
+                showInvoice(currentRental);
+                hideModal(document.getElementById('rental-modal'));
+            });
+            
+            showModal(document.getElementById('rental-modal'));
+        }
+
+        // Show invoice
+        function showInvoice(rental) {
+            const invoiceContent = document.getElementById('invoice-content');
+            const currentLanguage = localStorage.getItem('language') || 'en';
+            
+            invoiceContent.innerHTML = `
+                <div class="invoice-header">
+                    <h3 class="invoice-title" data-i18n="modal.invoice_title">Rental Invoice</h3>
+                    <p>${rental.invoiceNo}</p>
+                </div>
+                
+                <div class="invoice-details">
+                    <div class="invoice-detail-group">
+                        <p class="invoice-detail-label" data-i18n="invoice.item">Item:</p>
+                        <p>${rental.item.name}</p>
+                    </div>
+                    <div class="invoice-detail-group">
+                        <p class="invoice-detail-label" data-i18n="invoice.due_date">Due Date:</p>
+                        <p>${rental.dueDate}</p>
+                    </div>
+                </div>
+                
+                <table class="invoice-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="invoice.description">Description</th>
+                            <th class="text-right" data-i18n="invoice.amount">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${translations[currentLanguage]['invoice.rental_fee']} (${rental.rentDays} days @ ${formatCurrency(rental.dailyRate)}/day)</td>
+                            <td class="text-right">${formatCurrency(rental.totalRent)}</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="invoice.deposit">Security Deposit</td>
+                            <td class="text-right">${formatCurrency(rental.deposit)}</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td data-i18n="invoice.total">Total Amount</td>
+                            <td class="text-right">${formatCurrency(rental.totalAmount)}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="margin-top: 2rem; padding: 1rem; background: var(--bg); border-radius: 8px;">
+                    <p style="font-weight: 500; margin-bottom: 0.5rem;" data-i18n="invoice.notes_title">Important Notes:</p>
+                    <ul style="padding-left: 1.5rem;">
+                        <li style="margin-bottom: 0.25rem;" data-i18n="invoice.note1">Security deposit will be refunded after equipment return</li>
+                        <li style="margin-bottom: 0.25rem;" data-i18n="invoice.note2">Late returns will incur additional charges</li>
+                        <li data-i18n="invoice.note3">Damage to equipment may result in deposit forfeiture</li>
+                    </ul>
+                </div>
+            `;
+            
+            // Translate invoice content
+            changeLanguage(currentLanguage);
+            
+            showModal(document.getElementById('invoice-modal'));
+        }
+
+        // Show modal
+        function showModal(modal) {
+            modal.classList.add('active');
+        }
+
+        // Hide modal
+        function hideModal(modal) {
+            modal.classList.remove('active');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadInventory();
+            
+            // Close modals
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    hideModal(modal);
+                });
+            });
+            
+            // Proceed to payment
+            document.getElementById('proceed-payment').addEventListener('click', function() {
+                const paymentAmount = document.getElementById('payment-amount');
+                const qrCode = document.getElementById('qr-code');
+                const currentLanguage = localStorage.getItem('language') || 'en';
+                
+                // Generate ASCII QR code
+                function generateQRCode(text) {
+                    const qr = [
+                        "█████████████████████████",
+                        "██ ▄▄▄▄▄ ██▀█ █▄▄▀█ ▄▄▄▄▄ ██",
+                        "██ █   █ █▄▄█ █▄▀▄█ █   █ ██",
+                        "██ █▄▄▄█ █▄█▄▄█ █▄█ █▄▄▄█ ██",
+                        "██▄▄▄▄▄▄▄█ █ ▀▄▀ █▄▄▄▄▄▄▄██",
+                        "██▄ ▄▄ ▀▄▄ ▄▀▀▀█▄▀▄▀▀▄▀▄▄██",
+                        "██▄▄▄▀▀▄█▄█▀█▄▄▄▀▄▀ ▀▄▄▄▀██",
+                        "██ ▄▄▄▄▄ █▄█▀ ▄▄ █▄█  ▀▄▄██",
+                        "██ █   █ █ ▀█▄▀▀▄▄▀▀▀▄▄▀██",
+                        "██ █▄▄▄█ █▄▀▀ ▀▄ ▀▀▄▀▄▄ ▀██",
+                        "██▄▄▄▄▄▄▄█▄█▄▀▄▀▄█▄▄▄▄▄██",
+                        "█████████████████████████",
+                        `INV:${text}`
+                    ];
+                    
+                    qrCode.innerHTML = qr.map(line => `<div style="line-height: 1;">${line}</div>`).join('');
+                }
+                
+                // Simulate payment amount (in a real app, this would come from the rental calculation)
+                paymentAmount.textContent = formatCurrency(1000000);
+                generateQRCode('INV-' + new Date().getTime().toString().slice(-6));
+                
+                hideModal(document.getElementById('invoice-modal'));
+                showModal(document.getElementById('payment-modal'));
+            });
+            
+            // Confirm payment
+            document.getElementById('confirm-payment').addEventListener('click', function() {
+                const currentLanguage = localStorage.getItem('language') || 'en';
+                alert(translations[currentLanguage]['payment.confirmed']);
+                hideModal(document.getElementById('payment-modal'));
+            });
+            
+            // Payment method selection
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.addEventListener('click', function() {
+                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Close modals when clicking outside
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        hideModal(modal);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

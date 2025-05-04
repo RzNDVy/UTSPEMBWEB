@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyRent | Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Light Theme */
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #93c5fd;
+            --secondary: #f59e0b;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg: #f9fafb;
+            --bg-light: #ffffff;
+            --border: #e5e7eb;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Dark Theme */
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --primary-light: #1e40af;
+            --secondary: #f59e0b;
+            --text: #f9fafb;
+            --text-light: #d1d5db;
+            --bg: #111827;
+            --bg-light: #1f2937;
+            --border: #374151;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            transition: var(--transition);
+        }
+
+        /* Settings Container */
+        .settings-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 1000;
+        }
+
+        .settings-btn {
+            background: var(--bg-light);
+            color: var(--text);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .settings-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: var(--bg-light);
+            min-width: 120px;
+            box-shadow: var(--shadow-lg);
+            border-radius: 8px;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .dropdown-content a {
+            color: var(--text);
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--primary-light);
+            color: var(--bg-light);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Login Container */
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            text-align: center;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            text-decoration: none;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .login-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-decoration: none;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--bg-light);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .form-footer {
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Maintenance Page */
+        .maintenance-container {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            text-align: center;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .maintenance-icon {
+            font-size: 4rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .maintenance-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .maintenance-text {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container, .maintenance-container {
+                padding: 1.5rem;
+            }
+            
+            .login-title, .maintenance-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language and Theme Switcher -->
+    <div class="settings-container">
+        <div class="dropdown">
+            <button class="settings-btn" title="Change Language">
+                <i class="fas fa-language"></i>
+            </button>
+            <div class="dropdown-content" id="language-dropdown">
+                <a href="#" data-lang="en">English</a>
+                <a href="#" data-lang="id">Indonesia</a>
+                <a href="#" data-lang="ja">日本語</a>
+                <a href="#" data-lang="zh">中文</a>
+            </div>
+        </div>
+        <button class="settings-btn" id="theme-toggle" title="Toggle Dark Mode">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-container" id="login-container">
+        <div class="logo">
+            <i class="fas fa-camera-retro logo-icon"></i>
+            <span data-i18n="app.title">OnlyRent</span>
+        </div>
+        
+        <h1 class="login-title" data-i18n="login.title">Welcome Back</h1>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email" class="form-label" data-i18n="login.email">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="your@email.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="form-label" data-i18n="login.password">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem;" data-i18n="login.sign_in">
+                Sign In
+            </button>
+            
+            <div class="form-footer">
+                <span data-i18n="login.no_account">Don't have an account?</span> <a href="#" id="signup-link" data-i18n="login.sign_up">Sign up</a>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Maintenance Page -->
+    <div class="maintenance-container" id="maintenance-container">
+        <div class="maintenance-icon">
+            <i class="fas fa-tools"></i>
+        </div>
+        <h1 class="maintenance-title" data-i18n="maintenance.title">Under Maintenance</h1>
+        <p class="maintenance-text" data-i18n="maintenance.text">
+            We're currently working on improving our system to serve you better. 
+            Please check back later or contact us for urgent inquiries.
+        </p>
+        <a href="index.html" class="btn btn-primary" data-i18n="maintenance.back_home">Back to Home</a>
+    </div>
+
+    <script>
+        // Language Translations (same as index.html)
+        const translations = {
+            en: {
+                "app.title": "OnlyRent",
+                "login.title": "Welcome Back",
+                "login.email": "Email Address",
+                "login.password": "Password",
+                "login.sign_in": "Sign In",
+                "login.no_account": "Don't have an account?",
+                "login.sign_up": "Sign up",
+                "maintenance.title": "Under Maintenance",
+                "maintenance.text": "We're currently working on improving our system to serve you better. Please check back later or contact us for urgent inquiries.",
+                "maintenance.back_home": "Back to Home"
+            },
+            id: {
+                "app.title": "OnlyRent",
+                "login.title": "Selamat Datang Kembali",
+                "login.email": "Alamat Email",
+                "login.password": "Kata Sandi",
+                "login.sign_in": "Masuk",
+                "login.no_account": "Tidak punya akun?",
+                "login.sign_up": "Daftar",
+                "maintenance.title": "Dalam Pemeliharaan",
+                "maintenance.text": "Kami sedang bekerja untuk meningkatkan sistem kami. Silakan kembali lagi nanti atau hubungi kami untuk pertanyaan mendesak.",
+                "maintenance.back_home": "Kembali ke Beranda"
+            },
+            ja: {
+                "app.title": "OnlyRent",
+                "login.title": "おかえりなさい",
+                "login.email": "メールアドレス",
+                "login.password": "パスワード",
+                "login.sign_in": "ログイン",
+                "login.no_account": "アカウントをお持ちでない場合",
+                "login.sign_up": "サインアップ",
+                "maintenance.title": "メンテナンス中",
+                "maintenance.text": "システムの改善作業中です。後ほど再度お試しください。緊急の場合はお問い合わせください。",
+                "maintenance.back_home": "ホームに戻る"
+            },
+            zh: {
+                "app.title": "OnlyRent",
+                "login.title": "欢迎回来",
+                "login.email": "电子邮件地址",
+                "login.password": "密码",
+                "login.sign_in": "登录",
+                "login.no_account": "没有账户？",
+                "login.sign_up": "注册",
+                "maintenance.title": "维护中",
+                "maintenance.text": "我们正在改进系统以更好地为您服务。请稍后再试或联系我们进行紧急查询。",
+                "maintenance.back_home": "返回首页"
+            }
+        };
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // Apply saved theme from localStorage
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            const icon = themeToggle.querySelector('i');
+            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            themeToggle.title = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        }
+
+        // Language Switcher
+        const languageDropdown = document.getElementById('language-dropdown');
+        
+        // Apply saved language from localStorage
+        const currentLanguage = localStorage.getItem('language') || 'en';
+        changeLanguage(currentLanguage);
+
+        languageDropdown.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = e.target.getAttribute('data-lang');
+                changeLanguage(lang);
+                localStorage.setItem('language', lang);
+            });
+        });
+
+        function changeLanguage(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                } else {
+                    el.textContent = translations['en'][key]; // Fallback to English
+                }
+            });
+        }
+
+        // Form Handling
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showMaintenance();
+        });
+
+        document.getElementById('signup-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            showMaintenance();
+        });
+
+        function showMaintenance() {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('maintenance-container').style.display = 'block';
+            // Update language for maintenance page
+            changeLanguage(localStorage.getItem('language') || 'en');
+        }
+    </script>
+</body>
+</html>
